@@ -17,7 +17,7 @@ A Swift Property Wrapper that allows users to automatically save and load object
 - tvOS 6 or higher
 - watchOS 6 or higher
 
-## Problem 
+## The Problem 
 
 ```swift
 
@@ -29,13 +29,26 @@ struct Item {
 
 ```
 
-## How to use?
+## The Soluction
 
-Simple: Use it just like AppStorage.
+Simple: Use LocalStorage just like AppStorage.
 The item must conform to the Codable protocol.
 You can use it with objects and arrays.
 
-## Demo
+```swift
+
+import LocalStorage
+
+struct Item {
+    var i: Int
+}
+
+@LocalStorage("item") var item = Item(i: Int)
+
+```
+
+
+## Demo in SwiftUI
 
 ```swift
 
