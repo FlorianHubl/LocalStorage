@@ -5,7 +5,7 @@ A Swift Property Wrapper that allows users to automatically save and load object
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/FlorianHubl/LocalStorage.git** as Swift Package URL
-- Click on the Package
+- Click on the package
 - Click Add Package and you are done :D
 
 ## Requirements
@@ -20,8 +20,8 @@ A Swift Property Wrapper that allows users to automatically save and load object
 ## How to use?
 
 Simple: Use it just like AppStorage.
-The Item must conform to the Codable Protocol.
-You can use it with Objects and Arrays.
+The item must conform to the Codable protocol.
+You can use it with objects and arrays.
 
 ## Demo
 
