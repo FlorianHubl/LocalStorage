@@ -1,7 +1,7 @@
 # LocalStorage
 A Swift Property Wrapper that allows users to automatically save and load objects in UserDefaults.
 
-## Install via Swift Package Manager:
+## Install via Swift Package Manager
 
 - Add it using XCode menu **File > Swift Package > Add Package Dependency**
 - Add **https://github.com/FlorianHubl/LocalStorage.git** as Swift Package URL
