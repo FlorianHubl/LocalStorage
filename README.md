@@ -24,11 +24,14 @@ A Swift Property Wrapper that allows users to automatically save and load object
 
 ```swift
 
+import SwiftUI
+
 struct Item {
     var i: Int
 }
 
 @AppStorage("item") var item = Item(i: Int) // <-- This doesn't work, because AppStorage/UserDefaults doesn't support objects and arrays
+
 
 ```
 
@@ -47,6 +50,7 @@ struct Item {
 }
 
 @LocalStorage("item") var item = Item(i: Int)
+
 
 ```
 
