@@ -12,6 +12,7 @@ You can use it with Objects and Arrays.
 ```swift
 
 import SwiftUI
+import LocalStorage
 
 struct Item: Codable, Identifiable, Equatable {
     var id = UUID()
