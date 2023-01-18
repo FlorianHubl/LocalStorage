@@ -1,6 +1,22 @@
 # LocalStorage
 A Swift Property Wrapper that allows users to automatically save and load objects in UserDefaults.
 
+## Install via Swift Package Manager:
+
+- Add it using XCode menu **File > Swift Package > Add Package Dependency**
+- Add **https://github.com/FlorianHubl/LocalStorage.git** as Swift Package URL
+- Click on the Package
+- Click Add Package and you are done :D
+
+## Requirements
+
+- iOS 13 or higher
+- iPadOS 13 or higher
+- macOS 10.15 or higher
+- Mac Catalyst 13 or higher
+- tvOS 6 or higher
+- watchOS 6 or higher
+
 ## How to use?
 
 Simple: Use it just like AppStorage.
