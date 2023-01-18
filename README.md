@@ -37,7 +37,7 @@ struct Item: Codable, Identifiable, Equatable {
 
 struct ContentView: View {
     
-    @LocalStorage("Test") var storage = [Item]()
+    @LocalStorage("Demo") var storage = [Item]()
     
     var body: some View {
         NavigationStack {
