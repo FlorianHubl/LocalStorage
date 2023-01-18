@@ -11,24 +11,31 @@ You can use it with Objects and Arrays.
 
 ```swift
 
-struct DemoObject: Codable, Identifiable, Equatable {
+import SwiftUI
+
+struct Item: Codable, Identifiable, Equatable {
     var id = UUID()
     var i: Int
 }
 
-struct LocalStorageDemo: View {
+struct LocalStorageView: View {
     
-    @LocalStorage("Demo") var storage = [DemoObject(i: 1)]
+    @LocalStorage("Test") var storage = [Item]()
     
     var body: some View {
-        VStack {
-            Text("LocalStorageDemo")
-            ForEach(storage) { storage in
-                Text("\(storage.i)")
+        NavigationStack {
+            List {
+                ForEach(storage) { storage in
+                    Text("\(storage.i)")
+                }
+                .onDelete { indexSet in
+                    storage.remove(atOffsets: indexSet)
+                }
             }
-        }
-        .onTapGesture {
-            storage.append(Test(i: Int.random(in: 1...100)))
+            Button("Add Object") {
+                storage.append(Item(i: Int.random(in: 1...100)))
+            }
+            .navigationTitle("LocalStorage Demo")
         }
         .animation(.easeInOut, value: storage)
     }
