@@ -1,4 +1,7 @@
 # LocalStorage
+
+![Icon](https://github.com/FlorianHubl/LocalStorage/blob/main/LocalStorage%20Icon.png)
+
 A Swift Property Wrapper that allows users to automatically save and load objects in UserDefaults.
 
 ## Install via Swift Package Manager
