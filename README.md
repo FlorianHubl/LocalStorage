@@ -1,5 +1,5 @@
 # LocalStorage
-A Swift Property Wrapper that allows users to save and load objects in UserDefaults
+A Swift Property Wrapper that allows users to automatically save and load objects in UserDefaults.
 
 ## How to use?
 
