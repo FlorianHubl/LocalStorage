@@ -17,6 +17,18 @@ A Swift Property Wrapper that allows users to automatically save and load object
 - tvOS 6 or higher
 - watchOS 6 or higher
 
+## Problem 
+
+```swift
+
+struct Item {
+    var i: Int
+}
+
+@AppStorage("item") var item = Item(i: Int) // <-- This doesn't work, because AppStorage/UserDefaults doesn't support objects and arrays
+
+```
+
 ## How to use?
 
 Simple: Use it just like AppStorage.
