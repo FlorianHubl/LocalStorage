@@ -18,7 +18,7 @@ struct Item: Codable, Identifiable, Equatable {
     var i: Int
 }
 
-struct LocalStorageView: View {
+struct ContentView: View {
     
     @LocalStorage("Test") var storage = [Item]()
     
