@@ -1,6 +1,6 @@
 # LocalStorage
 
-![Icon](https://github.com/FlorianHubl/LocalStorage/blob/main/LocalStorage%20Icon.png =337x337))
+<img src="[https://your-image-url.type](https://github.com/FlorianHubl/LocalStorage/blob/main/LocalStorage%20Icon.png)" width="377" height="377">
 
 A Swift Property Wrapper that allows users to automatically save and load objects in UserDefaults.
 
