@@ -57,29 +57,29 @@ import LocalStorage
 
 struct Item: Codable, Identifiable, Equatable {
     var id = UUID()
-    var i: Int
+    var int: Int
 }
 
 struct ContentView: View {
     
-    @LocalStorage("Demo") var storage = [Item]()
+    @LocalStorage("items") var items = [Item]()
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(storage) { storage in
-                    Text("\(storage.i)")
+                ForEach(items) { item in
+                    Text("\(item.int)")
                 }
                 .onDelete { indexSet in
-                    storage.remove(atOffsets: indexSet)
+                    items.remove(atOffsets: indexSet)
                 }
             }
             Button("Add Object") {
-                storage.append(Item(i: Int.random(in: 1...100)))
+                items.append(Item(i: Int.random(in: 1...100)))
             }
             .navigationTitle("LocalStorage Demo")
         }
-        .animation(.easeInOut, value: storage)
+        .animation(.easeInOut, value: items)
     }
 }
 
