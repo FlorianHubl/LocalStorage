@@ -5,7 +5,7 @@ A Swift Property Wrapper that allows users to save and load objects in UserDefau
 
 Simple: Use it just like AppStorage.
 The Item must conform to the Codable Protocol.
-You can use it with Objects and Arrays
+You can use it with Objects and Arrays.
 
 ## Demo
 
