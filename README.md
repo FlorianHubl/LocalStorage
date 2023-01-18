@@ -92,3 +92,7 @@ struct ContentView: View {
 
 ```
 The data is saved permanently on the device.
+
+## Ok, but how does it actually work?
+
+Simple: When the user writes something to this value the property wrapper will convert that data into JSON and save it as binary data into the UserDefault under the specified key. If the user reads from the value the Data will be fetched from the UserDefaults and convert the JSON into a Swift object or array. Note that this package is pretty new and probably got some bugs. If you find one please report them to further improove the package. So now it is time to play around with it. :D
