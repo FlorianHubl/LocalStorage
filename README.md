@@ -35,7 +35,7 @@ struct Item {
 
 ```
 
-## The Soluction
+## The Solution
 
 Simple: Use LocalStorage just like AppStorage.
 The item must conform to the Codable protocol.
