@@ -8,15 +8,14 @@ public struct LocalStorage<Item: Codable>: DynamicProperty {
     @State private var encoded: Item
     let key: String
     
-    
     public var wrappedValue: Item {
         get {
             encoded
         }
         mutating set {
-            encoded = newValue
             let json = try! JSONEncoder().encode(newValue)
             UserDefaults().set(json, forKey: key)
+            self._encoded = State(wrappedValue: newValue)
         }
     }
     
