@@ -4,7 +4,7 @@ import SwiftUI
 
 @available(iOS 13.0, *)
 @propertyWrapper
-public class LocalStorage<Item: Codable>: DynamicProperty {
+public struct LocalStorage<Item: Codable>: DynamicProperty {
     @State private var encoded: Item
     let key: String
     
