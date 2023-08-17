@@ -24,6 +24,7 @@ public struct LocalStorage<Item: Codable>: DynamicProperty {
             encoded.item = newValue
             let json = try! JSONEncoder().encode(newValue)
             UserDefaults.standard.set(json, forKey: key)
+            encoded.objectWillChange.send()
         }
     }
     
