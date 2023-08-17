@@ -209,6 +209,62 @@ extension AppStorageCompat where Value == Data {
 }
 
 @available(iOS 13.0, *)
+extension AppStorageCompat where Value == Array<Codable> {
+
+    /// Creates a property that can read and write to a user default as data.
+    ///
+    /// Avoid storing large data blobs in user defaults, such as image data,
+    /// as it can negatively affect performance of your app. On tvOS, a
+    /// `NSUserDefaultsSizeLimitExceededNotification` notification is posted
+    /// if the total user default size reaches 512kB.
+    ///
+    /// - Parameters:
+    ///   - wrappedValue: The default value if a data value is not specified for
+    ///    the given key.
+    ///   - key: The key to read and write the value to in the user defaults
+    ///     store.
+    ///   - store: The user defaults store to read and write to. A value
+    ///     of `nil` will use the user default store from the environment.
+    public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
+        let store = (store ?? .standard)
+        let initialValue = store.value(forKey: key) as? Value ?? wrappedValue
+        self.init(value: initialValue, store: store, key: key, transform: {
+            $0 as? Value
+        }, saveValue: { newValue in
+            store.setValue(newValue, forKey: key)
+        })
+    }
+}
+
+@available(iOS 13.0, *)
+extension AppStorageCompat where Value == AnyObject {
+
+    /// Creates a property that can read and write to a user default as data.
+    ///
+    /// Avoid storing large data blobs in user defaults, such as image data,
+    /// as it can negatively affect performance of your app. On tvOS, a
+    /// `NSUserDefaultsSizeLimitExceededNotification` notification is posted
+    /// if the total user default size reaches 512kB.
+    ///
+    /// - Parameters:
+    ///   - wrappedValue: The default value if a data value is not specified for
+    ///    the given key.
+    ///   - key: The key to read and write the value to in the user defaults
+    ///     store.
+    ///   - store: The user defaults store to read and write to. A value
+    ///     of `nil` will use the user default store from the environment.
+    public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
+        let store = (store ?? .standard)
+        let initialValue = store.value(forKey: key) as? Value ?? wrappedValue
+        self.init(value: initialValue, store: store, key: key, transform: {
+            $0 as? Value
+        }, saveValue: { newValue in
+            store.setValue(newValue, forKey: key)
+        })
+    }
+}
+
+@available(iOS 13.0, *)
 extension AppStorageCompat where Value : RawRepresentable, Value.RawValue == Int {
 
     /// Creates a property that can read and write to an integer user default,
