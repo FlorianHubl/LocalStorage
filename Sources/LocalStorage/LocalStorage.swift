@@ -4,26 +4,19 @@ import SwiftUI
 
 @available(iOS 13.0, *)
 @propertyWrapper
-public struct LocalStorage<Item: Codable>: DynamicProperty {
-    @State private var encoded: Item
+public class LocalStorage<Item: Codable>: DynamicProperty {
+    @Published private var encoded: Item
     let key: String
     
     public var wrappedValue: Item {
         get {
             encoded
         }
-        nonmutating set {
+        set {
             encoded = newValue
             let json = try! JSONEncoder().encode(newValue)
             UserDefaults().set(json, forKey: key)
         }
-    }
-    
-    public var projectedValue: Binding<Item> {
-        Binding(
-            get: { wrappedValue },
-            set: { wrappedValue = $0 }
-        )
     }
     
     public init(wrappedValue: Item, _ a: String) {
@@ -32,9 +25,9 @@ public struct LocalStorage<Item: Codable>: DynamicProperty {
         if let data = data {
             do {
                 let item = try JSONDecoder().decode(Item.self, from: data)
-                self._encoded = State(wrappedValue: item)
+                self._encoded = Published(wrappedValue: item)
             }catch {
-                self._encoded = State(wrappedValue: wrappedValue)
+                self._encoded = Published(wrappedValue: wrappedValue)
                 let json = try! JSONEncoder().encode(wrappedValue)
                 UserDefaults().set(json, forKey: a)
                 print("LocalStorage: Input has not the correct type")
@@ -45,7 +38,7 @@ public struct LocalStorage<Item: Codable>: DynamicProperty {
                 print("The data has been overwritten with: \(wrappedValue)")
             }
         }else {
-            self._encoded = State(wrappedValue: wrappedValue)
+            self._encoded = Published(wrappedValue: wrappedValue)
             let json = try! JSONEncoder().encode(wrappedValue)
             UserDefaults().set(json, forKey: a)
         }
