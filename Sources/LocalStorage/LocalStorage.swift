@@ -3,19 +3,27 @@
 import SwiftUI
 
 @available(iOS 13.0, *)
+class LocalStorageItem<Item: Codable>: ObservableObject {
+    @Published var item: Item
+    init(item: Codable) {
+        self.item = item as! Item
+    }
+}
+
+@available(iOS 14.0, *)
 @propertyWrapper
 public struct LocalStorage<Item: Codable>: DynamicProperty {
-    @State private var encoded: Item
+    @StateObject private var encoded: LocalStorageItem<Item>
     let key: String
     
     public var wrappedValue: Item {
         get {
-            encoded
+            encoded.item
         }
-        mutating set {
+        nonmutating set {
+            encoded.item = newValue
             let json = try! JSONEncoder().encode(newValue)
             UserDefaults().set(json, forKey: key)
-            self._encoded = State(wrappedValue: newValue)
         }
     }
     
@@ -32,9 +40,10 @@ public struct LocalStorage<Item: Codable>: DynamicProperty {
         if let data = data {
             do {
                 let item = try JSONDecoder().decode(Item.self, from: data)
-                self._encoded = State(wrappedValue: item)
+                UserDefaults().set(item, forKey: a)
+                self._encoded = StateObject(wrappedValue: LocalStorageItem(item: wrappedValue))
             }catch {
-                self._encoded = State(wrappedValue: wrappedValue)
+                self._encoded = StateObject(wrappedValue: LocalStorageItem(item: wrappedValue))
                 let json = try! JSONEncoder().encode(wrappedValue)
                 UserDefaults().set(json, forKey: a)
                 print("LocalStorage: Input has not the correct type")
@@ -45,7 +54,7 @@ public struct LocalStorage<Item: Codable>: DynamicProperty {
                 print("The data has been overwritten with: \(wrappedValue)")
             }
         }else {
-            self._encoded = State(wrappedValue: wrappedValue)
+            self._encoded = StateObject(wrappedValue: LocalStorageItem(item: wrappedValue))
             let json = try! JSONEncoder().encode(wrappedValue)
             UserDefaults().set(json, forKey: a)
         }
