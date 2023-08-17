@@ -5,9 +5,8 @@ import SwiftUI
 @available(iOS 13.0, *)
 @propertyWrapper
 public class LocalStorage<Item: Codable>: DynamicProperty {
-    @Published private var encoded: Item
+    @State private var encoded: Item
     let key: String
-    
     
     public var wrappedValue: Item {
         get {
@@ -26,9 +25,9 @@ public class LocalStorage<Item: Codable>: DynamicProperty {
         if let data = data {
             do {
                 let item = try JSONDecoder().decode(Item.self, from: data)
-                self._encoded = Published(wrappedValue: item)
+                self._encoded = State(wrappedValue: item)
             }catch {
-                self._encoded = Published(wrappedValue: wrappedValue)
+                self._encoded = State(wrappedValue: wrappedValue)
                 let json = try! JSONEncoder().encode(wrappedValue)
                 UserDefaults().set(json, forKey: a)
                 print("LocalStorage: Input has not the correct type")
@@ -39,7 +38,7 @@ public class LocalStorage<Item: Codable>: DynamicProperty {
                 print("The data has been overwritten with: \(wrappedValue)")
             }
         }else {
-            self._encoded = Published(wrappedValue: wrappedValue)
+            self._encoded = State(wrappedValue: wrappedValue)
             let json = try! JSONEncoder().encode(wrappedValue)
             UserDefaults().set(json, forKey: a)
         }
