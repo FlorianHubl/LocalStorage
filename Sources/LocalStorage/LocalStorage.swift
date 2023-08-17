@@ -12,7 +12,7 @@ public struct LocalStorage<Item: Codable>: DynamicProperty {
         get {
             encoded
         }
-        set {
+        mutating set {
             encoded = newValue
             let json = try! JSONEncoder().encode(newValue)
             UserDefaults().set(json, forKey: key)
