@@ -23,7 +23,7 @@ public struct LocalStorage<Item: Codable>: DynamicProperty {
         nonmutating set {
             encoded.item = newValue
             let json = try! JSONEncoder().encode(newValue)
-            UserDefaults().set(json, forKey: key)
+            UserDefaults.standard.set(json, forKey: key)
         }
     }
     
@@ -35,28 +35,24 @@ public struct LocalStorage<Item: Codable>: DynamicProperty {
     }
     
     public init(wrappedValue: Item, _ a: String) {
-        let data = UserDefaults().data(forKey: a)
+        let data = UserDefaults.standard.data(forKey: a)
         self.key = a
         if let data = data {
             do {
                 let item = try JSONDecoder().decode(Item.self, from: data)
-                UserDefaults().set(item, forKey: a)
-                self._encoded = StateObject(wrappedValue: LocalStorageItem(item: wrappedValue))
+                self._encoded = StateObject(wrappedValue: LocalStorageItem(item: item))
             }catch {
                 self._encoded = StateObject(wrappedValue: LocalStorageItem(item: wrappedValue))
                 let json = try! JSONEncoder().encode(wrappedValue)
-                UserDefaults().set(json, forKey: a)
+                UserDefaults.standard.set(json, forKey: a)
                 print("LocalStorage: Input has not the correct type")
-                print("Input key: \(a)")
-                print("Input item: \(wrappedValue)")
-                print("Input type: \(type(of: wrappedValue))")
                 print("Data in UserDefaults: \(String(data: data, encoding: .utf8) ?? "Data Error")")
-                print("The data has been overwritten with: \(wrappedValue)")
+                print("The data has been overwritten")
             }
         }else {
             self._encoded = StateObject(wrappedValue: LocalStorageItem(item: wrappedValue))
             let json = try! JSONEncoder().encode(wrappedValue)
-            UserDefaults().set(json, forKey: a)
+            UserDefaults.standard.set(json, forKey: a)
         }
     }
 }
