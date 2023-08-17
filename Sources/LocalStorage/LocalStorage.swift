@@ -3,7 +3,7 @@
 import SwiftUI
 
 @available(iOS 13.0, *)
-@frozen @propertyWrapper public struct AppStorageCompat<Value> : DynamicProperty {
+@frozen @propertyWrapper public struct LocalStorage<Value> : DynamicProperty {
 
     @ObservedObject private var _value: Storage<Value>
     private let saveValue: (Value) -> Void
@@ -65,7 +65,7 @@ final class Storage<Value>: NSObject, ObservableObject {
 }
 
 @available(iOS 13.0, *)
-extension AppStorageCompat where Value == Bool {
+extension LocalStorage where Value == Bool {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
         let initialValue = store.value(forKey: key) as? Value ?? wrappedValue
@@ -78,7 +78,7 @@ extension AppStorageCompat where Value == Bool {
 }
 
 @available(iOS 13.0, *)
-extension AppStorageCompat where Value == Int {
+extension LocalStorage where Value == Int {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
         let initialValue = store.value(forKey: key) as? Value ?? wrappedValue
@@ -91,7 +91,7 @@ extension AppStorageCompat where Value == Int {
 }
 
 @available(iOS 13.0, *)
-extension AppStorageCompat where Value == Double {
+extension LocalStorage where Value == Double {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
         let initialValue = store.value(forKey: key) as? Value ?? wrappedValue
@@ -104,7 +104,7 @@ extension AppStorageCompat where Value == Double {
 }
 
 @available(iOS 13.0, *)
-extension AppStorageCompat where Value == String {
+extension LocalStorage where Value == String {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
         let initialValue = store.value(forKey: key) as? Value ?? wrappedValue
@@ -117,7 +117,7 @@ extension AppStorageCompat where Value == String {
 }
 
 @available(iOS 13.0, *)
-extension AppStorageCompat where Value == URL {
+extension LocalStorage where Value == URL {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
         let initialValue = store.url(forKey: key) ?? wrappedValue
@@ -130,7 +130,7 @@ extension AppStorageCompat where Value == URL {
 }
 
 @available(iOS 13.0, *)
-extension AppStorageCompat where Value == Data {
+extension LocalStorage where Value == Data {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
         let initialValue = store.value(forKey: key) as? Value ?? wrappedValue
@@ -143,7 +143,7 @@ extension AppStorageCompat where Value == Data {
 }
 
 @available(iOS 13.0, *)
-extension AppStorageCompat where Value: Codable {
+extension LocalStorage where Value: Codable {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
         let initialValue = store.data(forKey: key)
@@ -162,7 +162,7 @@ extension AppStorageCompat where Value: Codable {
 }
 
 @available(iOS 13.0, *)
-extension AppStorageCompat where Value : RawRepresentable, Value.RawValue == Int {
+extension LocalStorage where Value : RawRepresentable, Value.RawValue == Int {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
         let rawValue = store.value(forKey: key) as? Int
@@ -176,7 +176,7 @@ extension AppStorageCompat where Value : RawRepresentable, Value.RawValue == Int
 }
 
 @available(iOS 13.0, *)
-extension AppStorageCompat where Value : RawRepresentable, Value.RawValue == String {
+extension LocalStorage where Value : RawRepresentable, Value.RawValue == String {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
         let rawValue = store.value(forKey: key) as? String
@@ -188,7 +188,3 @@ extension AppStorageCompat where Value : RawRepresentable, Value.RawValue == Str
         })
     }
 }
-
-@available(*, deprecated, renamed: "AppStorageCompat")
-@available(iOS 13.0, *)
-public typealias Persistence = AppStorageCompat
