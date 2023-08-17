@@ -149,7 +149,8 @@ extension AppStorageCompat where Value: Codable {
         let initialValue = store.data(forKey: key)
         var d = wrappedValue
         if let v = initialValue {
-            d = try! JSONDecoder().decode(Value.self, from: v)
+            let a = try? JSONDecoder().decode(Value.self, from: v)
+            d = a ?? wrappedValue
         }
         self.init(value: d, store: store, key: key, transform: {
             $0 as? Value
