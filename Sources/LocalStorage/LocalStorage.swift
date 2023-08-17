@@ -8,6 +8,7 @@ public struct LocalStorage<Item: Codable>: DynamicProperty {
     @State private var encoded: Item
     let key: String
     
+    
     public var wrappedValue: Item {
         get {
             encoded
