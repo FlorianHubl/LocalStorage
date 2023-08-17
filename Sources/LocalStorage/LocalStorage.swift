@@ -8,6 +8,7 @@ public class LocalStorage<Item: Codable>: DynamicProperty {
     @Published private var encoded: Item
     let key: String
     
+    
     public var wrappedValue: Item {
         get {
             encoded
