@@ -209,7 +209,7 @@ extension AppStorageCompat where Value == Data {
 }
 
 @available(iOS 13.0, *)
-extension AppStorageCompat where Value == Array<Codable> {
+extension AppStorageCompat where Value: Codable {
 
     /// Creates a property that can read and write to a user default as data.
     ///
@@ -227,11 +227,16 @@ extension AppStorageCompat where Value == Array<Codable> {
     ///     of `nil` will use the user default store from the environment.
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
-        let initialValue = store.value(forKey: key) as? Value ?? wrappedValue
-        self.init(value: initialValue, store: store, key: key, transform: {
+        let initialValue = store.data(forKey: key)
+        var d = wrappedValue
+        if let v = initialValue {
+            d = try! JSONDecoder().decode(Value.self, from: v)
+        }
+        self.init(value: d, store: store, key: key, transform: {
             $0 as? Value
         }, saveValue: { newValue in
-            store.setValue(newValue, forKey: key)
+            let json = try! JSONEncoder().encode(newValue)
+            store.setValue(json, forKey: key)
         })
     }
 }
