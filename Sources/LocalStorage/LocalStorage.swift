@@ -27,12 +27,12 @@ public struct LocalStorage<Item: Codable>: DynamicProperty {
         }
     }
     
-//    public var projectedValue: Binding<Item> {
-//        Binding(
-//            get: { wrappedValue },
-//            set: { wrappedValue = $0 }
-//        )
-//    }
+    public var projectedValue: Binding<Item> {
+        Binding(
+            get: { wrappedValue },
+            set: { wrappedValue = $0 }
+        )
+    }
     
     public init(wrappedValue: Item, _ a: String) {
         let data = UserDefaults().data(forKey: a)
