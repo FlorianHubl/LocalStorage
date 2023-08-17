@@ -3,6 +3,7 @@
 <img src="https://github.com/FlorianHubl/LocalStorage/blob/main/LocalStorage.png" width="173" height="173">
 
 A Swift Property Wrapper that allows users to automatically save and load objects in UserDefaults.
+Its an extention of AppStorage.
 
 ## Install via Swift Package Manager
 
