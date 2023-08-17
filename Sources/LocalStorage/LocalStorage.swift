@@ -3,28 +3,19 @@
 import SwiftUI
 
 @available(iOS 13.0, *)
-class LocalStorageItem<Item: Codable>: ObservableObject {
-    @Published var item: Item
-    init(item: Codable) {
-        self.item = item as! Item
-    }
-}
-
-@available(iOS 14.0, *)
 @propertyWrapper
 public struct LocalStorage<Item: Codable>: DynamicProperty {
-    @StateObject private var encoded: LocalStorageItem<Item>
+    @State private var encoded: Item
     let key: String
     
     public var wrappedValue: Item {
         get {
-            encoded.item
+            encoded
         }
         nonmutating set {
-            encoded.item = newValue
+            encoded = newValue
             let json = try! JSONEncoder().encode(newValue)
-            UserDefaults.standard.set(json, forKey: key)
-            encoded.objectWillChange.send()
+            UserDefaults().set(json, forKey: key)
         }
     }
     
@@ -36,25 +27,27 @@ public struct LocalStorage<Item: Codable>: DynamicProperty {
     }
     
     public init(wrappedValue: Item, _ a: String) {
-        let data = UserDefaults.standard.data(forKey: a)
+        let data = UserDefaults().data(forKey: a)
         self.key = a
         if let data = data {
             do {
                 let item = try JSONDecoder().decode(Item.self, from: data)
-                self._encoded = StateObject(wrappedValue: LocalStorageItem(item: item))
+                self._encoded = State(wrappedValue: item)
             }catch {
-                self._encoded = StateObject(wrappedValue: LocalStorageItem(item: wrappedValue))
+                self._encoded = State(wrappedValue: wrappedValue)
                 let json = try! JSONEncoder().encode(wrappedValue)
-                UserDefaults.standard.set(json, forKey: a)
+                UserDefaults().set(json, forKey: a)
                 print("LocalStorage: Input has not the correct type")
+                print("Input key: \(a)")
+                print("Input item: \(wrappedValue)")
+                print("Input type: \(type(of: wrappedValue))")
                 print("Data in UserDefaults: \(String(data: data, encoding: .utf8) ?? "Data Error")")
-                print("The data has been overwritten")
+                print("The data has been overwritten with: \(wrappedValue)")
             }
         }else {
-            self._encoded = StateObject(wrappedValue: LocalStorageItem(item: wrappedValue))
+            self._encoded = State(wrappedValue: wrappedValue)
             let json = try! JSONEncoder().encode(wrappedValue)
-            UserDefaults.standard.set(json, forKey: a)
+            UserDefaults().set(json, forKey: a)
         }
     }
 }
-
