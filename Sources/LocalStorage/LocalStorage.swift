@@ -2,7 +2,7 @@
 
 import SwiftUI
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 12.0,  *)
 @frozen @propertyWrapper public struct LocalStorage<Value> : DynamicProperty {
 
     @ObservedObject private var _value: Storage<Value>
@@ -31,7 +31,7 @@ import SwiftUI
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 12.0,  *)
 @usableFromInline
 final class Storage<Value>: NSObject, ObservableObject {
     @Published var value: Value
@@ -64,7 +64,7 @@ final class Storage<Value>: NSObject, ObservableObject {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 12.0,  *)
 extension LocalStorage where Value == Bool {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
@@ -77,7 +77,7 @@ extension LocalStorage where Value == Bool {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 12.0,  *)
 extension LocalStorage where Value == Int {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
@@ -90,7 +90,7 @@ extension LocalStorage where Value == Int {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 12.0,  *)
 extension LocalStorage where Value == Double {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
@@ -103,7 +103,7 @@ extension LocalStorage where Value == Double {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 12.0,  *)
 extension LocalStorage where Value == String {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
@@ -116,7 +116,7 @@ extension LocalStorage where Value == String {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 12.0,  *)
 extension LocalStorage where Value == URL {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
@@ -129,7 +129,7 @@ extension LocalStorage where Value == URL {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 12.0,  *)
 extension LocalStorage where Value == Data {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
@@ -142,7 +142,7 @@ extension LocalStorage where Value == Data {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 12.0,  *)
 extension LocalStorage where Value: Codable {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
@@ -161,7 +161,7 @@ extension LocalStorage where Value: Codable {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 12.0,  *)
 extension LocalStorage where Value : RawRepresentable, Value.RawValue == Int {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
@@ -175,7 +175,7 @@ extension LocalStorage where Value : RawRepresentable, Value.RawValue == Int {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, macOS 12.0,  *)
 extension LocalStorage where Value : RawRepresentable, Value.RawValue == String {
     public init(wrappedValue: Value, _ key: String, store: UserDefaults? = nil) {
         let store = (store ?? .standard)
