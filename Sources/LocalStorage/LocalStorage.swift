@@ -188,3 +188,12 @@ extension LocalStorage where Value : RawRepresentable, Value.RawValue == String 
         })
     }
 }
+
+@available(iOS 13.0, macOS 12.0,  *)
+extension LocalStorage {
+    func saveManual(a: Value) {
+        saveValue(a)
+    }
+}
+
+
